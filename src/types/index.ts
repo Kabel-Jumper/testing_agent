@@ -17,26 +17,21 @@ export type CampusZone =
   | 'Kantin & Taman'
   | 'Area Parkir & Gerbang';
 
-// Titik Koordinat Pusat Kampus 2 UIN Antasari (GQH2+GQM, Kemuning, Banjarbaru Selatan)
-export const CAMPUS_CENTER: [number, number] = [-3.47118, 114.80194];
+// Titik Pusat Presisi Kampus 2 UIN Antasari Banjarmasin (Jalan Pandarapan, Guntung Manggis)
+export const CAMPUS_CENTER: [number, number] = [-3.4742, 114.7775];
 export const CAMPUS_DEFAULT_ZOOM = 17;
 
-// Batas wilayah maksimum di sekitar kompleks kampus
-export const CAMPUS_BOUNDS: [[number, number], [number, number]] = [
-  [-3.48, 114.792], // Sudut barat daya
-  [-3.462, 114.812], // Sudut timur laut
-];
-
+// Zona Koordinat Presisi di dalam kompleks Jalan Pandarapan
 export const CAMPUS_ZONE_COORDINATES: Record<
   CampusZone,
   { center: [number, number]; zoom: number }
 > = {
-  'Semua Area Kampus': { center: [-3.47118, 114.80194], zoom: 17 },
-  'Gedung Kuliah / Fakultas': { center: [-3.47125, 114.80198], zoom: 17.5 },
-  'Perpustakaan Pusat': { center: [-3.47065, 114.80245], zoom: 18 },
-  'Masjid Kampus': { center: [-3.47175, 114.8014], zoom: 18 },
-  'Kantin & Taman': { center: [-3.47145, 114.8016], zoom: 18 },
-  'Area Parkir & Gerbang': { center: [-3.4703, 114.80125], zoom: 17.5 },
+  'Semua Area Kampus': { center: [-3.4742, 114.7775], zoom: 17 },
+  'Gedung Kuliah / Fakultas': { center: [-3.4732, 114.7778], zoom: 17.5 },
+  'Perpustakaan Pusat': { center: [-3.4745, 114.7772], zoom: 18 },
+  'Masjid Kampus': { center: [-3.4756, 114.7768], zoom: 18 },
+  'Kantin & Taman': { center: [-3.474, 114.7774], zoom: 18 },
+  'Area Parkir & Gerbang': { center: [-3.4718, 114.7785], zoom: 17.5 },
 };
 
 export interface Item {

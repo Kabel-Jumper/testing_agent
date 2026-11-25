@@ -3,9 +3,9 @@
 import { Item, Claim, UserProfile, CampusZone, ItemStatus } from '@/types';
 import { INITIAL_ITEMS } from './mockData';
 
-const ITEMS_STORAGE_KEY = 'titik_temu_uin_items_v4';
-const CLAIMS_STORAGE_KEY = 'titik_temu_uin_claims_v4';
-const USER_STORAGE_KEY = 'titik_temu_uin_user_v4';
+const ITEMS_STORAGE_KEY = 'titik_temu_uin_items_v7';
+const CLAIMS_STORAGE_KEY = 'titik_temu_uin_claims_v7';
+const USER_STORAGE_KEY = 'titik_temu_uin_user_v7';
 
 export const DEMO_USER: UserProfile = {
   id: 'user-fauzan',
@@ -25,13 +25,37 @@ const isBrowser = () => typeof window !== 'undefined';
 export function getStoredItems(): Item[] {
   if (!isBrowser()) return INITIAL_ITEMS;
   try {
+    // Bersihkan semua versi cache lama agar tidak ada koordinat basi
+    ['titik_temu_items', 'titik_temu_uin_items_v1', 'titik_temu_uin_items_v2', 'titik_temu_uin_items_v3', 'titik_temu_uin_items_v4', 'titik_temu_uin_items_v5', 'titik_temu_uin_items_v6'].forEach(
+      (oldKey) => {
+        try {
+          localStorage.removeItem(oldKey);
+        } catch {}
+      }
+    );
+
     const raw = localStorage.getItem(ITEMS_STORAGE_KEY);
     if (!raw) {
       localStorage.setItem(ITEMS_STORAGE_KEY, JSON.stringify(INITIAL_ITEMS));
       return INITIAL_ITEMS;
     }
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) && parsed.length > 0 ? parsed : INITIAL_ITEMS;
+    if (!Array.isArray(parsed) || parsed.length === 0) {
+      localStorage.setItem(ITEMS_STORAGE_KEY, JSON.stringify(INITIAL_ITEMS));
+      return INITIAL_ITEMS;
+    }
+
+    // Deteksi jika masih ada item dengan koordinat lama di luar kompleks Jalan Pandarapan (misal lng > 114.79)
+    const hasOldCoords = parsed.some(
+      (it: Item) => typeof it.longitude === 'number' && it.longitude > 114.79
+    );
+    if (hasOldCoords) {
+      // Segera reset ke koordinat presisi baru Jalan Pandarapan
+      localStorage.setItem(ITEMS_STORAGE_KEY, JSON.stringify(INITIAL_ITEMS));
+      return INITIAL_ITEMS;
+    }
+
+    return parsed;
   } catch (err) {
     console.error('Failed to read items from localStorage:', err);
     return INITIAL_ITEMS;

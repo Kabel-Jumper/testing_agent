@@ -53,9 +53,9 @@ export const LocationPickerMapInner: React.FC<LocationPickerMapInnerProps> = ({
 
     // Pastikan urutan [latitude, longitude]
     const initialLat =
-      latitude && !isNaN(latitude) ? latitude : CAMPUS_CENTER[0]; // -3.47118
+      latitude && !isNaN(latitude) ? latitude : CAMPUS_CENTER[0]; // -3.4742
     const initialLng =
-      longitude && !isNaN(longitude) ? longitude : CAMPUS_CENTER[1]; // 114.80194
+      longitude && !isNaN(longitude) ? longitude : CAMPUS_CENTER[1]; // 114.7775
 
     const map = L.map(mapContainerRef.current, {
       center: [initialLat, initialLng],
@@ -67,7 +67,7 @@ export const LocationPickerMapInner: React.FC<LocationPickerMapInnerProps> = ({
       // maxBounds dimatikan agar map tidak terdorong/meleset dari titik kampus
     });
 
-    // Panggil setView eksplisit di [-3.47118, 114.80194]
+    // Panggil setView eksplisit di [-3.4742, 114.7775]
     map.setView([initialLat, initialLng], CAMPUS_DEFAULT_ZOOM);
 
     // TileLayer OpenStreetMap Asli

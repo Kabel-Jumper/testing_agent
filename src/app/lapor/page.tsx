@@ -50,40 +50,40 @@ const PRESET_CAMPUS_LOCATIONS: {
   lng: number;
 }[] = [
   {
+    name: 'Gerbang Utama & Pos Satpam (Jalan Pandarapan)',
+    zone: 'Area Parkir & Gerbang',
+    lat: -3.4718,
+    lng: 114.7785,
+  },
+  {
     name: 'Gedung Kuliah Terpadu / Rektorat',
     zone: 'Gedung Kuliah / Fakultas',
-    lat: -3.47125,
-    lng: 114.80198,
+    lat: -3.4732,
+    lng: 114.7778,
   },
   {
     name: 'Perpustakaan Pusat (Lantai 2 Ruang Baca)',
     zone: 'Perpustakaan Pusat',
-    lat: -3.47065,
-    lng: 114.80245,
+    lat: -3.4745,
+    lng: 114.7772,
   },
   {
     name: 'Masjid Kampus (Serambi & Wudhu)',
     zone: 'Masjid Kampus',
-    lat: -3.47175,
-    lng: 114.8014,
+    lat: -3.4756,
+    lng: 114.7768,
   },
   {
-    name: 'Gerbang Utama & Pos Satpam',
-    zone: 'Area Parkir & Gerbang',
-    lat: -3.4703,
-    lng: 114.80125,
-  },
-  {
-    name: 'Area Parkir & Fakultas (Fakultas Syariah/FUH)',
+    name: 'Fakultas & Area Parkir (Fakultas Syariah/FUH)',
     zone: 'Gedung Kuliah / Fakultas',
-    lat: -3.4718,
-    lng: 114.80265,
+    lat: -3.4738,
+    lng: 114.7782,
   },
   {
     name: 'Kantin & Taman (Gazebo Mahasiswa)',
     zone: 'Kantin & Taman',
-    lat: -3.47145,
-    lng: 114.8016,
+    lat: -3.474,
+    lng: 114.7774,
   },
 ];
 
@@ -97,8 +97,8 @@ function LaporFormContent() {
   const [category, setCategory] = useState<ItemCategory>('KTM & Dokumen');
   const [campusZone, setCampusZone] = useState<CampusZone>('Gedung Kuliah / Fakultas');
   const [locationName, setLocationName] = useState('');
-  const [latitude, setLatitude] = useState(CAMPUS_CENTER[0]); // -3.4675
-  const [longitude, setLongitude] = useState(CAMPUS_CENTER[1]); // 114.8195
+  const [latitude, setLatitude] = useState(CAMPUS_CENTER[0]); // -3.4742
+  const [longitude, setLongitude] = useState(CAMPUS_CENTER[1]); // 114.7775
   const [dateTime, setDateTime] = useState(
     new Date().toISOString().slice(0, 16)
   );

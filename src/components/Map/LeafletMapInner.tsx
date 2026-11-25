@@ -78,8 +78,8 @@ export const LeafletMapInner: React.FC<LeafletMapInnerProps> = ({
   useEffect(() => {
     if (!mapContainerRef.current || mapInstanceRef.current) return;
 
-    // Pastikan urutan koordinat adalah [latitude, longitude] yaitu [-3.47118, 114.80194]
-    const targetCenter: [number, number] = CAMPUS_CENTER; // [-3.47118, 114.80194]
+    // Pastikan urutan koordinat adalah [latitude, longitude] yaitu [-3.4742, 114.7775]
+    const targetCenter: [number, number] = CAMPUS_CENTER; // [-3.4742, 114.7775]
     const targetZoom: number = CAMPUS_DEFAULT_ZOOM; // 17
 
     const map = L.map(mapContainerRef.current, {
@@ -93,7 +93,7 @@ export const LeafletMapInner: React.FC<LeafletMapInnerProps> = ({
       // maxBounds dan fitBounds dimatikan agar tidak menarik peta keluar dari titik kampus
     });
 
-    // Panggil setView secara eksplisit untuk memastikan titik tepat di [-3.47118, 114.80194]
+    // Panggil setView secara eksplisit untuk memastikan titik tepat di [-3.4742, 114.7775]
     map.setView(targetCenter, targetZoom);
 
     // TileLayer OpenStreetMap Asli
@@ -216,7 +216,7 @@ export const LeafletMapInner: React.FC<LeafletMapInnerProps> = ({
     });
   }, [items, selectedItemId]);
 
-  // Tombol reset pusat ke [-3.47118, 114.80194]
+  // Tombol reset pusat ke [-3.4742, 114.7775]
   const handleResetCenter = () => {
     const map = mapInstanceRef.current;
     if (map) {
