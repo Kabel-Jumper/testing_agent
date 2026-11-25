@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -9,10 +9,10 @@ import {
   CampusZone,
   CAMPUS_CENTER,
   CAMPUS_DEFAULT_ZOOM,
-  CAMPUS_BOUNDS,
   CAMPUS_ZONE_COORDINATES,
 } from '@/types';
 import { truncateText } from '@/lib/utils';
+import { Navigation } from 'lucide-react';
 
 interface LeafletMapInnerProps {
   items: Item[];
@@ -34,6 +34,10 @@ export const LeafletMapInner: React.FC<LeafletMapInnerProps> = ({
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const markersGroupRef = useRef<L.LayerGroup | null>(null);
+
+  // State untuk menampilkan koordinat pusat peta secara live dan real-time
+  const [currentCenter, setCurrentCenter] = useState<[number, number]>(CAMPUS_CENTER);
+  const [currentZoom, setCurrentZoom] = useState<number>(CAMPUS_DEFAULT_ZOOM);
 
   // Custom SVG Markers
   const createCustomIcon = (type: string, status: string, isSelected: boolean) => {
@@ -70,37 +74,38 @@ export const LeafletMapInner: React.FC<LeafletMapInnerProps> = ({
     });
   };
 
-  // Initialize Leaflet Map centered on Kampus 2 UIN Antasari
+  // 1. Inisialisasi Peta Leaflet dengan OpenStreetMap ASLI
   useEffect(() => {
     if (!mapContainerRef.current || mapInstanceRef.current) return;
 
-    const initial =
-      CAMPUS_ZONE_COORDINATES[selectedZone] || {
-        center: CAMPUS_CENTER,
-        zoom: CAMPUS_DEFAULT_ZOOM,
-      };
+    // Pastikan urutan koordinat adalah [latitude, longitude] yaitu [-3.47118, 114.80194]
+    const targetCenter: [number, number] = CAMPUS_CENTER; // [-3.47118, 114.80194]
+    const targetZoom: number = CAMPUS_DEFAULT_ZOOM; // 17
 
     const map = L.map(mapContainerRef.current, {
-      center: initial.center,
-      zoom: initial.zoom,
+      center: targetCenter,
+      zoom: targetZoom,
       zoomControl: interactive,
       attributionControl: false,
       scrollWheelZoom: interactive,
       maxZoom: 19,
-      minZoom: 15,
-      maxBounds: CAMPUS_BOUNDS,
-      maxBoundsViscosity: 0.9,
+      minZoom: 13,
+      // maxBounds dan fitBounds dimatikan agar tidak menarik peta keluar dari titik kampus
     });
 
-    // High detail OpenStreetMap tiles
+    // Panggil setView secara eksplisit untuk memastikan titik tepat di [-3.47118, 114.80194]
+    map.setView(targetCenter, targetZoom);
+
+    // TileLayer OpenStreetMap Asli
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
+      subdomains: ['a', 'b', 'c'],
     }).addTo(map);
 
     L.control
       .attribution({
         prefix:
-          '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> | UIN Antasari Kampus 2',
+          '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> | UIN Antasari',
         position: 'bottomright',
       })
       .addTo(map);
@@ -109,24 +114,42 @@ export const LeafletMapInner: React.FC<LeafletMapInnerProps> = ({
     mapInstanceRef.current = map;
     markersGroupRef.current = markersGroup;
 
+    // Listener real-time saat peta digeser/di-zoom untuk memperbarui teks koordinat pusat
+    map.on('move', () => {
+      const c = map.getCenter();
+      setCurrentCenter([c.lat, c.lng]);
+    });
+
+    map.on('zoomend', () => {
+      setCurrentZoom(map.getZoom());
+    });
+
+    // Invalidate size agar perhitungan dimensi container tidak meleset
+    setTimeout(() => {
+      if (map) {
+        map.invalidateSize();
+        map.setView(targetCenter, targetZoom);
+      }
+    }, 150);
+
     return () => {
       map.remove();
       mapInstanceRef.current = null;
     };
   }, []);
 
-  // Fly to campus zones when selectedZone changes
+  // 2. Berpindah zona ketika selectedZone berubah
   useEffect(() => {
     const map = mapInstanceRef.current;
     if (!map) return;
 
     const target = CAMPUS_ZONE_COORDINATES[selectedZone];
     if (target) {
-      map.flyTo(target.center, target.zoom, { duration: 1.1 });
+      map.flyTo(target.center, target.zoom, { duration: 1.0 });
     }
   }, [selectedZone]);
 
-  // Update Markers
+  // 3. Render Marker Barang
   useEffect(() => {
     const map = mapInstanceRef.current;
     const markersGroup = markersGroupRef.current;
@@ -138,6 +161,7 @@ export const LeafletMapInner: React.FC<LeafletMapInnerProps> = ({
       const isSelected = item.id === selectedItemId;
       const icon = createCustomIcon(item.type, item.status, isSelected);
 
+      // Pastikan urutan: [latitude, longitude]
       const marker = L.marker([item.latitude, item.longitude], { icon });
 
       marker.on('click', () => {
@@ -192,28 +216,52 @@ export const LeafletMapInner: React.FC<LeafletMapInnerProps> = ({
     });
   }, [items, selectedItemId]);
 
+  // Tombol reset pusat ke [-3.47118, 114.80194]
+  const handleResetCenter = () => {
+    const map = mapInstanceRef.current;
+    if (map) {
+      map.setView(CAMPUS_CENTER, CAMPUS_DEFAULT_ZOOM);
+    }
+  };
+
   return (
     <div className="relative w-full h-full rounded-2xl overflow-hidden border border-[#E2E8F0] shadow-sm">
       <div ref={mapContainerRef} style={{ height, width: '100%' }} />
 
       {/* Floating Campus Map Legend */}
-      <div className="absolute top-3 left-3 z-[400] bg-white/95 backdrop-blur-md px-3 py-2.5 rounded-2xl shadow-md border border-[#E2E8F0] text-xs">
-        <div className="font-extrabold text-[#1B4A6B] mb-1.5 flex items-center gap-1.5">
+      <div className="absolute top-3 left-3 z-[400] bg-white/95 backdrop-blur-md px-3 py-2 rounded-2xl shadow-md border border-[#E2E8F0] text-xs">
+        <div className="font-extrabold text-[#1B4A6B] mb-1 flex items-center justify-between gap-2">
           <span>🏛️ Peta Kampus 2 UIN Antasari</span>
+          <button
+            type="button"
+            onClick={handleResetCenter}
+            className="p-1 rounded-lg bg-slate-100 hover:bg-[#29A9A3] hover:text-white text-slate-600 transition-colors"
+            title="Pusatkan Kembali ke Kampus 2"
+          >
+            <Navigation className="w-3 h-3" />
+          </button>
         </div>
-        <div className="flex flex-col gap-1 text-[11px] font-semibold text-slate-700">
+        <div className="flex flex-col gap-0.5 text-[10px] font-semibold text-slate-700">
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-[#F2823A] border border-white"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-[#F2823A] border border-white"></span>
             <span>Barang Hilang</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-[#29A9A3] border border-white"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-[#29A9A3] border border-white"></span>
             <span>Barang Ditemukan</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-emerald-500 border border-white"></span>
-            <span>Sudah Bertemu (Selesai)</span>
-          </div>
+        </div>
+      </div>
+
+      {/* INDIKATOR KOORDINAT PUSAT AKTIF DI POJOK BAWAH PETA (Sesuai Permintaan) */}
+      <div className="absolute bottom-2 left-2 z-[400] bg-slate-900/90 text-white backdrop-blur-md px-3 py-1.5 rounded-xl shadow-lg border border-slate-700 text-[11px] font-mono flex items-center gap-2">
+        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+        <div>
+          <span className="text-slate-300 font-sans text-[10px] block">Pusat Peta Aktif:</span>
+          <span className="font-bold text-emerald-300">
+            [{currentCenter[0].toFixed(5)}, {currentCenter[1].toFixed(5)}]
+          </span>
+          <span className="text-slate-400 text-[10px] ml-1.5">(Zoom: {currentZoom})</span>
         </div>
       </div>
     </div>

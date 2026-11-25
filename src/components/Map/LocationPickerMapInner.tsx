@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { CampusZone, CAMPUS_CENTER, CAMPUS_DEFAULT_ZOOM, CAMPUS_BOUNDS } from '@/types';
-import { MapPin } from 'lucide-react';
+import { CampusZone, CAMPUS_CENTER, CAMPUS_DEFAULT_ZOOM } from '@/types';
+import { MapPin, Navigation } from 'lucide-react';
 
 interface LocationPickerMapInnerProps {
   latitude: number;
@@ -19,11 +19,15 @@ export const LocationPickerMapInner: React.FC<LocationPickerMapInnerProps> = ({
   longitude,
   campusZone,
   onChangeCoordinates,
-  height = '340px',
+  height = '350px',
 }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
+
+  // State koordinat pusat peta real-time
+  const [currentMapCenter, setCurrentMapCenter] = useState<[number, number]>(CAMPUS_CENTER);
+  const [currentZoom, setCurrentZoom] = useState<number>(CAMPUS_DEFAULT_ZOOM);
 
   const createPickerIcon = () => {
     const svgHtml = `
@@ -47,22 +51,29 @@ export const LocationPickerMapInner: React.FC<LocationPickerMapInnerProps> = ({
   useEffect(() => {
     if (!mapContainerRef.current || mapInstanceRef.current) return;
 
-    const initialLat = latitude && !isNaN(latitude) ? latitude : CAMPUS_CENTER[0];
-    const initialLng = longitude && !isNaN(longitude) ? longitude : CAMPUS_CENTER[1];
+    // Pastikan urutan [latitude, longitude]
+    const initialLat =
+      latitude && !isNaN(latitude) ? latitude : CAMPUS_CENTER[0]; // -3.47118
+    const initialLng =
+      longitude && !isNaN(longitude) ? longitude : CAMPUS_CENTER[1]; // 114.80194
 
     const map = L.map(mapContainerRef.current, {
       center: [initialLat, initialLng],
       zoom: CAMPUS_DEFAULT_ZOOM,
       maxZoom: 19,
-      minZoom: 15,
-      maxBounds: CAMPUS_BOUNDS,
-      maxBoundsViscosity: 0.9,
+      minZoom: 13,
       scrollWheelZoom: true,
       attributionControl: false,
+      // maxBounds dimatikan agar map tidak terdorong/meleset dari titik kampus
     });
 
+    // Panggil setView eksplisit di [-3.47118, 114.80194]
+    map.setView([initialLat, initialLng], CAMPUS_DEFAULT_ZOOM);
+
+    // TileLayer OpenStreetMap Asli
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
+      subdomains: ['a', 'b', 'c'],
     }).addTo(map);
 
     const icon = createPickerIcon();
@@ -72,21 +83,39 @@ export const LocationPickerMapInner: React.FC<LocationPickerMapInnerProps> = ({
       autoPan: true,
     }).addTo(map);
 
-    // Drag event: updates form coordinates when marker is dragged
+    // Event geser pin (dragend)
     marker.on('dragend', (e) => {
       const position = e.target.getLatLng();
       onChangeCoordinates(position.lat, position.lng);
     });
 
-    // Click event on map: immediately relocates marker and updates form coordinates
+    // Event klik pada peta: Menempatkan pin ke titik yang diklik pengguna
     map.on('click', (e) => {
       const { lat, lng } = e.latlng;
       marker.setLatLng([lat, lng]);
       onChangeCoordinates(lat, lng);
     });
 
+    // Event pemantau pergerakan pusat peta
+    map.on('move', () => {
+      const c = map.getCenter();
+      setCurrentMapCenter([c.lat, c.lng]);
+    });
+
+    map.on('zoomend', () => {
+      setCurrentZoom(map.getZoom());
+    });
+
     mapInstanceRef.current = map;
     markerRef.current = marker;
+
+    // Invalidate size agar tidak ada pergeseran rendering
+    setTimeout(() => {
+      if (map) {
+        map.invalidateSize();
+        map.setView([initialLat, initialLng], CAMPUS_DEFAULT_ZOOM);
+      }
+    }, 150);
 
     return () => {
       map.remove();
@@ -95,7 +124,7 @@ export const LocationPickerMapInner: React.FC<LocationPickerMapInnerProps> = ({
     };
   }, []);
 
-  // Sync external changes (e.g. from preset buttons)
+  // Sinkronisasi perubahan dari tombol preset
   useEffect(() => {
     if (markerRef.current && latitude && longitude) {
       markerRef.current.setLatLng([latitude, longitude]);
@@ -105,18 +134,46 @@ export const LocationPickerMapInner: React.FC<LocationPickerMapInnerProps> = ({
     }
   }, [latitude, longitude]);
 
+  // Tombol reset view ke titik pusat Kampus 2 UIN Antasari
+  const handleResetToCampusCenter = () => {
+    const map = mapInstanceRef.current;
+    const marker = markerRef.current;
+    if (map && marker) {
+      marker.setLatLng(CAMPUS_CENTER);
+      map.setView(CAMPUS_CENTER, CAMPUS_DEFAULT_ZOOM);
+      onChangeCoordinates(CAMPUS_CENTER[0], CAMPUS_CENTER[1]);
+    }
+  };
+
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden border border-[#E2E8F0]">
+    <div className="relative w-full rounded-2xl overflow-hidden border border-[#E2E8F0] shadow-sm">
       <div ref={mapContainerRef} style={{ height, width: '100%' }} />
 
-      <div className="absolute bottom-2.5 left-2.5 right-2.5 z-[400] bg-white/95 backdrop-blur-md px-3.5 py-2.5 rounded-xl text-xs text-slate-700 shadow border border-slate-200 flex items-center justify-between">
-        <div className="flex items-center gap-1.5 font-bold text-[#1B4A6B]">
-          <MapPin className="w-4 h-4 text-[#F2823A] flex-shrink-0" />
-          <span>Klik atau seret pin ke lokasi barang di Kampus 2</span>
+      {/* Tombol Re-center ke Kampus 2 */}
+      <button
+        type="button"
+        onClick={handleResetToCampusCenter}
+        className="absolute top-3 right-3 z-[400] bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl text-xs font-bold text-[#1B4A6B] shadow-md border border-[#E2E8F0] hover:bg-[#29A9A3] hover:text-white transition-colors flex items-center gap-1.5"
+      >
+        <Navigation className="w-3.5 h-3.5" />
+        <span>Reset ke Pusat Kampus 2</span>
+      </button>
+
+      {/* INDIKATOR KOORDINAT AKTIF DI POJOK BAWAH PETA */}
+      <div className="absolute bottom-2 left-2 right-2 z-[400] bg-slate-900/90 text-white backdrop-blur-md px-3.5 py-2 rounded-xl shadow-lg border border-slate-700 text-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
+        <div className="flex items-center gap-2">
+          <MapPin className="w-4 h-4 text-[#F2823A] flex-shrink-0 animate-bounce" />
+          <span className="font-semibold text-slate-200">
+            Pin Terpilih:
+            <strong className="text-emerald-400 font-mono ml-1.5">
+              [{latitude.toFixed(5)}, {longitude.toFixed(5)}]
+            </strong>
+          </span>
         </div>
-        <span className="font-mono text-[11px] font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
-          {latitude.toFixed(5)}, {longitude.toFixed(5)}
-        </span>
+        <div className="text-[11px] font-mono text-slate-400">
+          Pusat Peta: [{currentMapCenter[0].toFixed(5)}, {currentMapCenter[1].toFixed(5)}] (Zoom:{' '}
+          {currentZoom})
+        </div>
       </div>
     </div>
   );
