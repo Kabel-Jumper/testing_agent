@@ -17,7 +17,13 @@ import {
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import LocationPickerMap from '@/components/Map/LocationPickerMap';
-import { ItemCategory, ItemType, CampusZone, CAMPUS_ZONE_COORDINATES } from '@/types';
+import {
+  ItemCategory,
+  ItemType,
+  CampusZone,
+  CAMPUS_CENTER,
+  CAMPUS_ZONE_COORDINATES,
+} from '@/types';
 import { createItem, getCurrentUser } from '@/lib/store';
 
 const CAMPUS_CATEGORIES: ItemCategory[] = [
@@ -44,46 +50,40 @@ const PRESET_CAMPUS_LOCATIONS: {
   lng: number;
 }[] = [
   {
-    name: 'Perpustakaan Pusat Kampus 2 (Lt. 2 Ruang Baca)',
-    zone: 'Perpustakaan Pusat',
-    lat: -3.483,
-    lng: 114.8433,
-  },
-  {
-    name: 'Gedung Kuliah Terpadu (GKT Ruang Kuliah)',
-    zone: 'Gedung Kuliah / Fakultas',
-    lat: -3.4838,
-    lng: 114.8429,
-  },
-  {
-    name: 'Masjid Kampus 2 UIN Antasari (Serambi & Wudhu)',
-    zone: 'Masjid Kampus',
-    lat: -3.4826,
-    lng: 114.8418,
-  },
-  {
-    name: 'Area Parkir Utama Mahasiswa (Dekat Gerbang Jl. Pandarapan)',
+    name: 'Gerbang Utama & Pos Satpam',
     zone: 'Area Parkir & Gerbang',
-    lat: -3.4845,
-    lng: 114.8415,
+    lat: -3.4658,
+    lng: 114.8188,
   },
   {
-    name: 'Kantin Mahasiswa Kampus 2 (Gazebo Belakang)',
+    name: 'Gedung Kuliah Terpadu / Rektorat',
+    zone: 'Gedung Kuliah / Fakultas',
+    lat: -3.4672,
+    lng: 114.8193,
+  },
+  {
+    name: 'Perpustakaan Pusat (Lantai 2 Ruang Baca)',
+    zone: 'Perpustakaan Pusat',
+    lat: -3.4678,
+    lng: 114.8201,
+  },
+  {
+    name: 'Masjid Kampus (Serambi & Wudhu)',
+    zone: 'Masjid Kampus',
+    lat: -3.4683,
+    lng: 114.8189,
+  },
+  {
+    name: 'Area Parkir & Fakultas (Parkir Depan Fakultas)',
+    zone: 'Area Parkir & Gerbang',
+    lat: -3.4669,
+    lng: 114.8205,
+  },
+  {
+    name: 'Kantin & Taman (Gazebo Mahasiswa)',
     zone: 'Kantin & Taman',
-    lat: -3.4841,
-    lng: 114.8422,
-  },
-  {
-    name: 'Gedung Fakultas Syariah (Lantai 1)',
-    zone: 'Gedung Kuliah / Fakultas',
-    lat: -3.4836,
-    lng: 114.8436,
-  },
-  {
-    name: 'Fakultas Ushuluddin & Humaniora (Lab Komputer)',
-    zone: 'Gedung Kuliah / Fakultas',
-    lat: -3.4828,
-    lng: 114.8426,
+    lat: -3.4676,
+    lng: 114.8197,
   },
 ];
 
@@ -97,8 +97,8 @@ function LaporFormContent() {
   const [category, setCategory] = useState<ItemCategory>('KTM & Dokumen');
   const [campusZone, setCampusZone] = useState<CampusZone>('Gedung Kuliah / Fakultas');
   const [locationName, setLocationName] = useState('');
-  const [latitude, setLatitude] = useState(-3.4835);
-  const [longitude, setLongitude] = useState(114.8425);
+  const [latitude, setLatitude] = useState(CAMPUS_CENTER[0]); // -3.4675
+  const [longitude, setLongitude] = useState(CAMPUS_CENTER[1]); // 114.8195
   const [dateTime, setDateTime] = useState(
     new Date().toISOString().slice(0, 16)
   );
@@ -149,7 +149,13 @@ function LaporFormContent() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !locationName.trim() || !securityQuestion.trim() || !reporterName.trim() || !reporterContact.trim()) {
+    if (
+      !title.trim() ||
+      !locationName.trim() ||
+      !securityQuestion.trim() ||
+      !reporterName.trim() ||
+      !reporterContact.trim()
+    ) {
       alert('Harap lengkapi semua kolom yang bertanda bintang (*).');
       return;
     }
@@ -167,9 +173,11 @@ function LaporFormContent() {
       latitude,
       longitude,
       date_time: new Date(dateTime).toISOString(),
-      photo_url: photoUrl || (type === 'hilang'
-        ? 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=80'
-        : 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80'),
+      photo_url:
+        photoUrl ||
+        (type === 'hilang'
+          ? 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=80'
+          : 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80'),
       is_photo_blurred: isPhotoBlurred,
       security_question: securityQuestion,
       reporter_name: reporterName,
@@ -209,7 +217,7 @@ function LaporFormContent() {
             Buat Laporan Barang di Kampus
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 mt-1">
-            Bantu sesama mahasiswa, dosen, dan staf menemukan kembali KTM, charger, kunci, atau buku yang tercecer.
+            Bantu sesama mahasiswa, dosen, dan staf menemukan kembali KTM, charger, kunci, atau buku yang tercecer di Kampus 2.
           </p>
 
           {/* Toggle Type: Hilang vs Ditemukan */}
@@ -346,9 +354,14 @@ function LaporFormContent() {
 
           {/* Interactive Map Pin Picker on Kampus 2 */}
           <div>
-            <label className="block text-xs font-bold text-[#1B4A6B] uppercase tracking-wider mb-2">
-              Tandai Titik Lokasi Pada Peta Kampus 2 (Zoom Detail)
-            </label>
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-xs font-bold text-[#1B4A6B] uppercase tracking-wider">
+                Tandai Titik Lokasi Pada Peta Kampus 2 (Klik Peta Untuk Menandai)
+              </label>
+              <span className="text-[11px] font-mono text-[#29A9A3] font-bold">
+                Lat: {latitude.toFixed(5)}, Lng: {longitude.toFixed(5)}
+              </span>
+            </div>
             <LocationPickerMap
               latitude={latitude}
               longitude={longitude}

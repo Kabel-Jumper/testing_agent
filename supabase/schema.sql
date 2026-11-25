@@ -1,5 +1,6 @@
 -- Titik Temu - Lost and Found Schema
 -- Localized for Kampus 2 UIN Antasari Banjarmasin di Banjarbaru (Jl. Pandarapan, Guntung Manggis)
+-- Koordinat Pusat Kampus: -3.4675, 114.8195
 
 -- 1. Profiles Table
 CREATE TABLE IF NOT EXISTS public.profiles (
@@ -108,7 +109,7 @@ ON public.claims FOR SELECT USING (
 CREATE POLICY "Anyone can submit a claim" 
 ON public.claims FOR INSERT WITH CHECK (true);
 
--- Seed Sample Data for Kampus 2 UIN Antasari Banjarbaru (Center: -3.4835, 114.8425)
+-- Seed Sample Data for Kampus 2 UIN Antasari Banjarbaru (Center: -3.4675, 114.8195)
 INSERT INTO public.items (
     title, category, type, status, description, location_name, campus_zone, latitude, longitude, 
     date_time, photo_url, is_photo_blurred, security_question, reporter_name, reporter_role, reporter_contact
@@ -121,8 +122,8 @@ INSERT INTO public.items (
     'Ditemukan tertinggal di meja bilik baca lantai 2 Perpustakaan Pusat Kampus 2 UIN Antasari. Di dalamnya ada Kartu Tanda Mahasiswa (KTM) Fakultas Tarbiyah dan Keguruan, SIM C, dan kartu Flazz.',
     'Perpustakaan Pusat Kampus 2 (Lantai 2 Ruang Baca)',
     'Perpustakaan Pusat',
-    -3.4830000,
-    114.8433000,
+    -3.4678000,
+    114.8201000,
     NOW() - INTERVAL '2 hours',
     'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80',
     true,
@@ -136,16 +137,16 @@ INSERT INTO public.items (
     'Kunci & Kendaraan',
     'ditemukan',
     'aktif',
-    'Ditemukan masih tergantung di stop kontak motor Honda Scoopy abu-abu di area parkir utama samping pos satpam gerbang Jl. Pandarapan. Demi keamanan kunci diamankan petugas satpam.',
-    'Area Parkir Utama Mahasiswa (Dekat Gerbang Masuk Jl. Pandarapan)',
+    'Ditemukan masih tergantung di stop kontak motor Honda Scoopy abu-abu di area parkir utama samping pos satpam gerbang Jl. Pandarapan. Demi keamanan kunci diamankan petugas satpam pos jaga.',
+    'Gerbang Utama & Pos Satpam (Parkiran Samping Gerbang Jl. Pandarapan)',
     'Area Parkir & Gerbang',
-    -3.4845000,
-    114.8415000,
+    -3.4658000,
+    114.8188000,
     NOW() - INTERVAL '4 hours',
     'https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=800&q=80',
     false,
     'Sebutkan 3 huruf belakang plat nomor motor Scoopy Anda atau ciri gantungan kain tambahan',
-    'Pak Ahmad (Komandan Satpam Kampus 2)',
+    'Pak Ahmad (Komandan Regu Satpam Kampus 2)',
     'Satpam Kampus',
     '081349887711'
 ),
@@ -155,10 +156,10 @@ INSERT INTO public.items (
     'hilang',
     'aktif',
     'Tertinggal di colokan dinding baris ketiga sebelah kiri ruang kuliah 304 Gedung Kuliah Terpadu (GKT) Kampus 2 setelah perkuliahan Metodologi Penelitian jam 11.30 siang.',
-    'Gedung Kuliah Terpadu (GKT Lt. 3 Ruang 304)',
+    'Gedung Kuliah Terpadu / Rektorat (GKT Lt. 3 Ruang 304)',
     'Gedung Kuliah / Fakultas',
-    -3.4838000,
-    114.8429000,
+    -3.4672000,
+    114.8193000,
     NOW() - INTERVAL '6 hours',
     'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=800&q=80',
     false,
@@ -173,10 +174,10 @@ INSERT INTO public.items (
     'ditemukan',
     'aktif',
     'Ditemukan di dekat rak sepatu serambi samping Masjid Kampus 2 UIN Antasari setelah sholat Dzuhur berjamaah. Kondisi bersih, terdapat stiker kaligrafi kecil.',
-    'Masjid Kampus 2 UIN Antasari (Serambi Samping Tempat Wudhu)',
+    'Masjid Kampus (Serambi Samping Tempat Wudhu)',
     'Masjid Kampus',
-    -3.4826000,
-    114.8418000,
+    -3.4683000,
+    114.8189000,
     NOW() - INTERVAL '10 hours',
     'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=800&q=80',
     false,
@@ -191,10 +192,10 @@ INSERT INTO public.items (
     'hilang',
     'aktif',
     'Diduga tertinggal di kursi tunggu depan Ruang Pelayanan Administrasi Fakultas Syariah Kampus 2. Berisi catatan materi penting untuk persiapan ujian komprehensif.',
-    'Gedung Fakultas Syariah (Lantai 1 Depan Ruang Akademik)',
+    'Area Parkir & Fakultas (Gedung Fakultas Syariah Lt. 1)',
     'Gedung Kuliah / Fakultas',
-    -3.4836000,
-    114.8436000,
+    -3.4669000,
+    114.8205000,
     NOW() - INTERVAL '1 day',
     'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
     false,
@@ -209,10 +210,10 @@ INSERT INTO public.items (
     'ditemukan',
     'aktif',
     'Ditemukan tergantung di sandaran kursi kayu kantin kampus 2 UIN Antasari dekat stan es teh manis. Jaket bersih beremblem bordir logo UIN Antasari di dada kiri.',
-    'Kantin Mahasiswa Kampus 2 (Gazebo Belakang)',
+    'Kantin & Taman (Gazebo Utama Kantin Mahasiswa)',
     'Kantin & Taman',
-    -3.4841000,
-    114.8422000,
+    -3.4676000,
+    114.8197000,
     NOW() - INTERVAL '1 hour',
     'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80',
     false,

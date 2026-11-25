@@ -4,7 +4,14 @@ import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Item, CampusZone, CAMPUS_ZONE_COORDINATES } from '@/types';
+import {
+  Item,
+  CampusZone,
+  CAMPUS_CENTER,
+  CAMPUS_DEFAULT_ZOOM,
+  CAMPUS_BOUNDS,
+  CAMPUS_ZONE_COORDINATES,
+} from '@/types';
 import { truncateText } from '@/lib/utils';
 
 interface LeafletMapInnerProps {
@@ -63,13 +70,15 @@ export const LeafletMapInner: React.FC<LeafletMapInnerProps> = ({
     });
   };
 
-  // Initialize Leaflet Map
+  // Initialize Leaflet Map centered on Kampus 2 UIN Antasari
   useEffect(() => {
     if (!mapContainerRef.current || mapInstanceRef.current) return;
 
     const initial =
-      CAMPUS_ZONE_COORDINATES[selectedZone] ||
-      CAMPUS_ZONE_COORDINATES['Semua Area Kampus'];
+      CAMPUS_ZONE_COORDINATES[selectedZone] || {
+        center: CAMPUS_CENTER,
+        zoom: CAMPUS_DEFAULT_ZOOM,
+      };
 
     const map = L.map(mapContainerRef.current, {
       center: initial.center,
@@ -78,7 +87,9 @@ export const LeafletMapInner: React.FC<LeafletMapInnerProps> = ({
       attributionControl: false,
       scrollWheelZoom: interactive,
       maxZoom: 19,
-      minZoom: 14,
+      minZoom: 15,
+      maxBounds: CAMPUS_BOUNDS,
+      maxBoundsViscosity: 0.9,
     });
 
     // High detail OpenStreetMap tiles
@@ -111,7 +122,7 @@ export const LeafletMapInner: React.FC<LeafletMapInnerProps> = ({
 
     const target = CAMPUS_ZONE_COORDINATES[selectedZone];
     if (target) {
-      map.flyTo(target.center, target.zoom, { duration: 1.2 });
+      map.flyTo(target.center, target.zoom, { duration: 1.1 });
     }
   }, [selectedZone]);
 

@@ -1,7 +1,7 @@
 import { Item } from '@/types';
 
 // Kampus 2 UIN Antasari Banjarmasin di Banjarbaru (Jl. Pandarapan, Guntung Manggis)
-// Koordinat Pusat Kampus: -3.4835, 114.8425
+// Koordinat Pusat Kampus: -3.4675, 114.8195
 export const INITIAL_ITEMS: Item[] = [
   {
     id: 'uin-perpus-ktm-dompet',
@@ -13,8 +13,8 @@ export const INITIAL_ITEMS: Item[] = [
       'Ditemukan tertinggal di meja bilik baca lantai 2 Perpustakaan Pusat Kampus 2 UIN Antasari. Di dalamnya ada Kartu Tanda Mahasiswa (KTM) Fakultas Tarbiyah dan Keguruan, SIM C, dan kartu Flazz.',
     location_name: 'Perpustakaan Pusat Kampus 2 (Lantai 2 Ruang Baca)',
     campus_zone: 'Perpustakaan Pusat',
-    latitude: -3.483,
-    longitude: 114.8433,
+    latitude: -3.4678,
+    longitude: 114.8201,
     date_time: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80',
@@ -36,10 +36,10 @@ export const INITIAL_ITEMS: Item[] = [
     status: 'aktif',
     description:
       'Ditemukan masih tergantung di stop kontak motor Honda Scoopy abu-abu matte di area parkir utama samping pos satpam gerbang Jl. Pandarapan. Demi keamanan kunci diamankan petugas satpam pos jaga.',
-    location_name: 'Area Parkir Utama Mahasiswa (Dekat Gerbang Masuk Jl. Pandarapan)',
+    location_name: 'Gerbang Utama & Pos Satpam (Parkiran Samping Gerbang Jl. Pandarapan)',
     campus_zone: 'Area Parkir & Gerbang',
-    latitude: -3.4845,
-    longitude: 114.8415,
+    latitude: -3.4658,
+    longitude: 114.8188,
     date_time: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=800&q=80',
@@ -61,10 +61,10 @@ export const INITIAL_ITEMS: Item[] = [
     status: 'aktif',
     description:
       'Tertinggal di colokan dinding baris ketiga sebelah kiri ruang kuliah 304 Gedung Kuliah Terpadu (GKT) Kampus 2 setelah perkuliahan Metodologi Penelitian jam 11.30 siang tadi.',
-    location_name: 'Gedung Kuliah Terpadu (GKT Lt. 3 Ruang 304)',
+    location_name: 'Gedung Kuliah Terpadu / Rektorat (GKT Lt. 3 Ruang 304)',
     campus_zone: 'Gedung Kuliah / Fakultas',
-    latitude: -3.4838,
-    longitude: 114.8429,
+    latitude: -3.4672,
+    longitude: 114.8193,
     date_time: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=800&q=80',
@@ -86,10 +86,10 @@ export const INITIAL_ITEMS: Item[] = [
     status: 'aktif',
     description:
       'Ditemukan di dekat rak sepatu serambi samping Masjid Kampus 2 UIN Antasari setelah sholat Dzuhur berjamaah. Kondisi bersih, terdapat stiker kaligrafi kecil.',
-    location_name: 'Masjid Kampus 2 UIN Antasari (Serambi Samping Tempat Wudhu)',
+    location_name: 'Masjid Kampus (Serambi Samping Tempat Wudhu)',
     campus_zone: 'Masjid Kampus',
-    latitude: -3.4826,
-    longitude: 114.8418,
+    latitude: -3.4683,
+    longitude: 114.8189,
     date_time: new Date(Date.now() - 10 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=800&q=80',
@@ -111,10 +111,10 @@ export const INITIAL_ITEMS: Item[] = [
     status: 'aktif',
     description:
       'Diduga tertinggal di kursi tunggu depan Ruang Pelayanan Administrasi Fakultas Syariah Kampus 2. Sangat penting karena berisi catatan materi ujian akhir semester.',
-    location_name: 'Gedung Fakultas Syariah (Lantai 1 Depan Ruang Akademik)',
+    location_name: 'Area Parkir & Fakultas (Gedung Fakultas Syariah Lt. 1)',
     campus_zone: 'Gedung Kuliah / Fakultas',
-    latitude: -3.4836,
-    longitude: 114.8436,
+    latitude: -3.4669,
+    longitude: 114.8205,
     date_time: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
@@ -136,10 +136,10 @@ export const INITIAL_ITEMS: Item[] = [
     status: 'aktif',
     description:
       'Ditemukan tergantung di sandaran kursi kayu kantin kampus 2 UIN Antasari dekat stan es teh manis. Jaket bersih beremblem bordir logo UIN Antasari di dada kiri.',
-    location_name: 'Kantin Mahasiswa Kampus 2 (Gazebo Belakang)',
+    location_name: 'Kantin & Taman (Gazebo Utama Kantin Mahasiswa)',
     campus_zone: 'Kantin & Taman',
-    latitude: -3.4841,
-    longitude: 114.8422,
+    latitude: -3.4676,
+    longitude: 114.8197,
     date_time: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80',
@@ -161,10 +161,10 @@ export const INITIAL_ITEMS: Item[] = [
     status: 'aktif',
     description:
       'Tertinggal di meja Lab Komputer / Multimedia Gedung Fakultas Ushuluddin & Humaniora saat praktikum siang kemarin. Case warna putih dengan gantungan silikon abu-abu.',
-    location_name: 'Fakultas Ushuluddin & Humaniora (Lab Komputer Lt. 2)',
+    location_name: 'Area Parkir & Fakultas (Gedung FUH Lab Komputer Lt. 2)',
     campus_zone: 'Gedung Kuliah / Fakultas',
-    latitude: -3.4828,
-    longitude: 114.8426,
+    latitude: -3.4667,
+    longitude: 114.8208,
     date_time: new Date(Date.now() - 30 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80',
@@ -173,7 +173,7 @@ export const INITIAL_ITEMS: Item[] = [
       'Sebutkan warna lampu indikator case saat dibuka dan karakter casing silikonnya',
     security_answer_hint: 'Casing silikon ada gantungan tali...',
     reporter_name: 'Reza Pahlevi',
-    reporter_role: 'Mahasiswa Ilmu Al-Qur\'an dan Tafsir (IAT)',
+    reporter_role: "Mahasiswa Ilmu Al-Qur'an dan Tafsir (IAT)",
     reporter_contact: '081299881122',
     reporter_user_id: 'user-reza',
     created_at: new Date(Date.now() - 30 * 60 * 60 * 1000).toISOString(),
@@ -186,10 +186,10 @@ export const INITIAL_ITEMS: Item[] = [
     status: 'selesai',
     description:
       'Ditemukan di bangku pos keamanan gerbang utama Jl. Pandarapan. Sudah berhasil diserahterimakan kembali ke mahasiswa bersangkutan setelah diverifikasi identitasnya.',
-    location_name: 'Pos Pengamanan Gerbang Utama Jl. Pandarapan',
+    location_name: 'Gerbang Utama & Pos Satpam (Jl. Pandarapan)',
     campus_zone: 'Area Parkir & Gerbang',
-    latitude: -3.4847,
-    longitude: 114.8412,
+    latitude: -3.4658,
+    longitude: 114.8188,
     date_time: new Date(Date.now() - 50 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1589758438368-0ad531db3366?auto=format&fit=crop&w=800&q=80',
