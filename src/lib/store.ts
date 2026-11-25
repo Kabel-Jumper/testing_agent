@@ -3,9 +3,9 @@
 import { Item, Claim, UserProfile, CampusZone, ItemStatus } from '@/types';
 import { INITIAL_ITEMS } from './mockData';
 
-const ITEMS_STORAGE_KEY = 'titik_temu_uin_items_v3';
-const CLAIMS_STORAGE_KEY = 'titik_temu_uin_claims_v3';
-const USER_STORAGE_KEY = 'titik_temu_uin_user_v3';
+const ITEMS_STORAGE_KEY = 'titik_temu_uin_items_v4';
+const CLAIMS_STORAGE_KEY = 'titik_temu_uin_claims_v4';
+const USER_STORAGE_KEY = 'titik_temu_uin_user_v4';
 
 export const DEMO_USER: UserProfile = {
   id: 'user-fauzan',

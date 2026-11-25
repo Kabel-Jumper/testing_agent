@@ -1,7 +1,7 @@
 import { Item } from '@/types';
 
-// Kampus 2 UIN Antasari Banjarmasin di Banjarbaru (Jl. Pandarapan, Guntung Manggis)
-// Koordinat Pusat Kampus: -3.4675, 114.8195
+// Kampus 2 UIN Antasari (GQH2+GQM, Kemuning, Banjarbaru Selatan)
+// Koordinat Pusat: -3.47118, 114.80194
 export const INITIAL_ITEMS: Item[] = [
   {
     id: 'uin-perpus-ktm-dompet',
@@ -13,8 +13,8 @@ export const INITIAL_ITEMS: Item[] = [
       'Ditemukan tertinggal di meja bilik baca lantai 2 Perpustakaan Pusat Kampus 2 UIN Antasari. Di dalamnya ada Kartu Tanda Mahasiswa (KTM) Fakultas Tarbiyah dan Keguruan, SIM C, dan kartu Flazz.',
     location_name: 'Perpustakaan Pusat Kampus 2 (Lantai 2 Ruang Baca)',
     campus_zone: 'Perpustakaan Pusat',
-    latitude: -3.4678,
-    longitude: 114.8201,
+    latitude: -3.47065,
+    longitude: 114.80245,
     date_time: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80',
@@ -35,11 +35,11 @@ export const INITIAL_ITEMS: Item[] = [
     type: 'ditemukan',
     status: 'aktif',
     description:
-      'Ditemukan masih tergantung di stop kontak motor Honda Scoopy abu-abu matte di area parkir utama samping pos satpam gerbang Jl. Pandarapan. Demi keamanan kunci diamankan petugas satpam pos jaga.',
-    location_name: 'Gerbang Utama & Pos Satpam (Parkiran Samping Gerbang Jl. Pandarapan)',
+      'Ditemukan masih tergantung di stop kontak motor Honda Scoopy abu-abu matte di area parkir utama samping pos satpam gerbang. Demi keamanan kunci diamankan petugas satpam pos jaga.',
+    location_name: 'Gerbang Utama & Pos Satpam (Parkiran Depan Gerbang)',
     campus_zone: 'Area Parkir & Gerbang',
-    latitude: -3.4658,
-    longitude: 114.8188,
+    latitude: -3.4703,
+    longitude: 114.80125,
     date_time: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=800&q=80',
@@ -63,8 +63,8 @@ export const INITIAL_ITEMS: Item[] = [
       'Tertinggal di colokan dinding baris ketiga sebelah kiri ruang kuliah 304 Gedung Kuliah Terpadu (GKT) Kampus 2 setelah perkuliahan Metodologi Penelitian jam 11.30 siang tadi.',
     location_name: 'Gedung Kuliah Terpadu / Rektorat (GKT Lt. 3 Ruang 304)',
     campus_zone: 'Gedung Kuliah / Fakultas',
-    latitude: -3.4672,
-    longitude: 114.8193,
+    latitude: -3.47125,
+    longitude: 114.80198,
     date_time: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=800&q=80',
@@ -88,8 +88,8 @@ export const INITIAL_ITEMS: Item[] = [
       'Ditemukan di dekat rak sepatu serambi samping Masjid Kampus 2 UIN Antasari setelah sholat Dzuhur berjamaah. Kondisi bersih, terdapat stiker kaligrafi kecil.',
     location_name: 'Masjid Kampus (Serambi Samping Tempat Wudhu)',
     campus_zone: 'Masjid Kampus',
-    latitude: -3.4683,
-    longitude: 114.8189,
+    latitude: -3.47175,
+    longitude: 114.8014,
     date_time: new Date(Date.now() - 10 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=800&q=80',
@@ -111,10 +111,10 @@ export const INITIAL_ITEMS: Item[] = [
     status: 'aktif',
     description:
       'Diduga tertinggal di kursi tunggu depan Ruang Pelayanan Administrasi Fakultas Syariah Kampus 2. Sangat penting karena berisi catatan materi ujian akhir semester.',
-    location_name: 'Area Parkir & Fakultas (Gedung Fakultas Syariah Lt. 1)',
+    location_name: 'Gedung Fakultas & Ruang Kuliah (Fakultas Syariah Lt. 1)',
     campus_zone: 'Gedung Kuliah / Fakultas',
-    latitude: -3.4669,
-    longitude: 114.8205,
+    latitude: -3.4718,
+    longitude: 114.80265,
     date_time: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
@@ -138,8 +138,8 @@ export const INITIAL_ITEMS: Item[] = [
       'Ditemukan tergantung di sandaran kursi kayu kantin kampus 2 UIN Antasari dekat stan es teh manis. Jaket bersih beremblem bordir logo UIN Antasari di dada kiri.',
     location_name: 'Kantin & Taman (Gazebo Utama Kantin Mahasiswa)',
     campus_zone: 'Kantin & Taman',
-    latitude: -3.4676,
-    longitude: 114.8197,
+    latitude: -3.47145,
+    longitude: 114.8016,
     date_time: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80',
@@ -161,10 +161,10 @@ export const INITIAL_ITEMS: Item[] = [
     status: 'aktif',
     description:
       'Tertinggal di meja Lab Komputer / Multimedia Gedung Fakultas Ushuluddin & Humaniora saat praktikum siang kemarin. Case warna putih dengan gantungan silikon abu-abu.',
-    location_name: 'Area Parkir & Fakultas (Gedung FUH Lab Komputer Lt. 2)',
+    location_name: 'Gedung Fakultas & Ruang Kuliah (FUH Lab Komputer Lt. 2)',
     campus_zone: 'Gedung Kuliah / Fakultas',
-    latitude: -3.4667,
-    longitude: 114.8208,
+    latitude: -3.4721,
+    longitude: 114.8023,
     date_time: new Date(Date.now() - 30 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80',
@@ -185,11 +185,11 @@ export const INITIAL_ITEMS: Item[] = [
     type: 'ditemukan',
     status: 'selesai',
     description:
-      'Ditemukan di bangku pos keamanan gerbang utama Jl. Pandarapan. Sudah berhasil diserahterimakan kembali ke mahasiswa bersangkutan setelah diverifikasi identitasnya.',
-    location_name: 'Gerbang Utama & Pos Satpam (Jl. Pandarapan)',
+      'Ditemukan di bangku pos keamanan gerbang utama. Sudah berhasil diserahterimakan kembali ke mahasiswa bersangkutan setelah diverifikasi identitasnya.',
+    location_name: 'Gerbang Utama & Pos Satpam (Pos Jaga Keamanan)',
     campus_zone: 'Area Parkir & Gerbang',
-    latitude: -3.4658,
-    longitude: 114.8188,
+    latitude: -3.47025,
+    longitude: 114.80135,
     date_time: new Date(Date.now() - 50 * 60 * 60 * 1000).toISOString(),
     photo_url:
       'https://images.unsplash.com/photo-1589758438368-0ad531db3366?auto=format&fit=crop&w=800&q=80',

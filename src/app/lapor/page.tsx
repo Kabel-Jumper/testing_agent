@@ -50,40 +50,40 @@ const PRESET_CAMPUS_LOCATIONS: {
   lng: number;
 }[] = [
   {
-    name: 'Gerbang Utama & Pos Satpam',
-    zone: 'Area Parkir & Gerbang',
-    lat: -3.4658,
-    lng: 114.8188,
-  },
-  {
     name: 'Gedung Kuliah Terpadu / Rektorat',
     zone: 'Gedung Kuliah / Fakultas',
-    lat: -3.4672,
-    lng: 114.8193,
+    lat: -3.47125,
+    lng: 114.80198,
   },
   {
     name: 'Perpustakaan Pusat (Lantai 2 Ruang Baca)',
     zone: 'Perpustakaan Pusat',
-    lat: -3.4678,
-    lng: 114.8201,
+    lat: -3.47065,
+    lng: 114.80245,
   },
   {
     name: 'Masjid Kampus (Serambi & Wudhu)',
     zone: 'Masjid Kampus',
-    lat: -3.4683,
-    lng: 114.8189,
+    lat: -3.47175,
+    lng: 114.8014,
   },
   {
-    name: 'Area Parkir & Fakultas (Parkir Depan Fakultas)',
+    name: 'Gerbang Utama & Pos Satpam',
     zone: 'Area Parkir & Gerbang',
-    lat: -3.4669,
-    lng: 114.8205,
+    lat: -3.4703,
+    lng: 114.80125,
+  },
+  {
+    name: 'Area Parkir & Fakultas (Fakultas Syariah/FUH)',
+    zone: 'Gedung Kuliah / Fakultas',
+    lat: -3.4718,
+    lng: 114.80265,
   },
   {
     name: 'Kantin & Taman (Gazebo Mahasiswa)',
     zone: 'Kantin & Taman',
-    lat: -3.4676,
-    lng: 114.8197,
+    lat: -3.47145,
+    lng: 114.8016,
   },
 ];
 
